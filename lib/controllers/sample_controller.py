@@ -67,17 +67,19 @@ class Sample_Controller():
 
     def play_intro(self,pos,now):
         self.wait_beat(now)
-        print("Playing: " + self.intro[pos].path)
+        print(f"Playing: {self.intro[pos].path}")
         pygame.mixer.Channel(4).play(pygame.mixer.Sound(self.intro[pos].path))
         time.sleep(self.intro[pos].length)
 
     def play_hit(self,sample,now,fade_length):
 
-        self.wait_beat(now)  
+        self.wait_beat(now)
         if fade_length == 0:
-            print("Playing: " + sample.path)
+            print(f"Playing: {sample.path}")
         else:
-            print("Playing: " + sample.path + ", Fade_In_Length: " + str(round(fade_length * sample.length,2)) + "s")
+            print(
+                f"Playing: {sample.path}, Fade_In_Length: {str(round(fade_length * sample.length, 2))}s"
+            )
 
         pygame.mixer.Channel(4).play(pygame.mixer.Sound(sample.path), fade_ms = int(fade_length * sample.length * 1000))
 
@@ -90,10 +92,12 @@ class Sample_Controller():
             fade_length = fade_length/2
 
         if fade_length == 0:
-            print("Playing: " + sample.path)
+            print(f"Playing: {sample.path}")
         else:
-            print("Playing: " + sample.path + ", Fade_In_Length: " + str(round(fade_length * sample.length,2)) + "s")
-     
+            print(
+                f"Playing: {sample.path}, Fade_In_Length: {str(round(fade_length * sample.length, 2))}s"
+            )
+
         fade = int(fade_length * sample.length * 1000)
         pygame.mixer.Channel(channel).set_volume(1.0)
         pygame.mixer.Channel(channel).play(pygame.mixer.Sound(sample.path), loops = -1, fade_ms = fade)
@@ -101,16 +105,18 @@ class Sample_Controller():
 
     def stop_loop(self,channel,sample,fade_length):
 
-        if sample == None:
+        if sample is None:
             return
 
         if sample.length >= 29:
             fade_length = fade_length/4
 
         if fade_length == 0:
-            print("Stopping: " + sample.path)
+            print(f"Stopping: {sample.path}")
         else:
-            print("Stopping: " + sample.path + ", Fade_Out_Length: " + str(round(fade_length * sample.length,2)) + "s")
+            print(
+                f"Stopping: {sample.path}, Fade_Out_Length: {str(round(fade_length * sample.length, 2))}s"
+            )
 
         if fade_length == 0:
             pygame.mixer.Channel(channel).stop()
@@ -120,21 +126,21 @@ class Sample_Controller():
 
     def isolate_element(self,elem):
         
-        if self.curr_bass_obj != None and self.curr_bass_obj != elem:
+        if self.curr_bass_obj not in [None, elem]:
             self.stop_bass_loop(False,1)
-        if self.curr_drums_full_obj != None and self.curr_drums_full_obj != elem:
+        if self.curr_drums_full_obj not in [None, elem]:
             self.stop_drums_full(False,1)
-        if self.curr_drums_tops_obj != None and self.curr_drums_tops_obj != elem:
+        if self.curr_drums_tops_obj not in [None, elem]:
             self.stop_drums_tops(False,1)
-        if self.curr_synth_obj != None and self.curr_synth_obj != elem:
+        if self.curr_synth_obj not in [None, elem]:
             self.stop_synth_loop(False,1)
-        if self.curr_snare_obj != None and self.curr_snare_obj != elem:
+        if self.curr_snare_obj not in [None, elem]:
             self.stop_snare_loop(False,1)
-        if self.curr_synth_2_obj != None and self.curr_synth_2_obj != elem:
+        if self.curr_synth_2_obj not in [None, elem]:
             self.stop_synth_2_loop(False,1)
-        if self.curr_bass_2_obj != None and self.curr_bass_2_obj != elem:
+        if self.curr_bass_2_obj not in [None, elem]:
             self.stop_bass_2_loop(False,1)
-        if self.curr_vocal_obj != None and self.curr_vocal_obj != elem:
+        if self.curr_vocal_obj not in [None, elem]:
             self.stop_vocal_loop(False,1)
 
     def build_up_transition(self,build_up_pos,now):
@@ -150,8 +156,8 @@ class Sample_Controller():
                 time.sleep(self.curr_bass_obj.length - sample.length)
         else:
             self.wait_beat(now)
-        
-        print("Playing: "+ sample.path)
+
+        print(f"Playing: {sample.path}")
         pygame.mixer.Channel(5).play(pygame.mixer.Sound(sample.path), fade_ms = int(0.5 * sample.length * 1000))
         time.sleep(sample.length)
 

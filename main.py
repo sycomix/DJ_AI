@@ -30,7 +30,7 @@ def create_drum(file,my_path):
     split_str = file.split('_')
    # print(split_str)
     bpm = int(split_str[1])
-    wav = my_path + "/" + file
+    wav = f"{my_path}/{file}"
 
     return Drums(bpm, wav)
 
@@ -39,7 +39,7 @@ def create_synth(file,my_path):
  #   print(split_str)
     bpm = int(split_str[1])
     key = split_str[2]
-    wav = my_path + "/" + file
+    wav = f"{my_path}/{file}"
 
     return Synth(bpm, key, wav)
 
@@ -48,7 +48,7 @@ def create_bass(file,my_path):
   #  print(split_str)
     bpm = int(split_str[1])
     key = split_str[2]
-    wav = my_path + "/" + file
+    wav = f"{my_path}/{file}"
 
     return Bass(bpm, key, wav)
 
@@ -56,7 +56,7 @@ def create_perc(file,my_path):
     split_str = file.split('_')
   #  print(split_str)
     bpm = int(split_str[1])
-    wav = my_path + "/" + file
+    wav = f"{my_path}/{file}"
 
     return Percussion(bpm, wav)
 
@@ -64,7 +64,7 @@ def create_fx(file,my_path):
     split_str = file.split('_')
  #   print(split_str)
     bpm = int(split_str[1])
-    wav = my_path + "/" + file
+    wav = f"{my_path}/{file}"
 
     return FX(bpm, wav)
 
@@ -73,7 +73,7 @@ def create_vocal(file,my_path):
   #  print(split_str)
     bpm = int(split_str[1])
     key = split_str[2]
-    wav = my_path + "/" + file
+    wav = f"{my_path}/{file}"
 
     return Vocal(bpm, key, wav)
 
@@ -82,7 +82,7 @@ def create_transition(file,my_path):
   #  print(split_str)
     start_bpm = int(split_str[1])
     end_bpm = int(split_str[2])
-    wav = my_path + "/" + file
+    wav = f"{my_path}/{file}"
 
     return Transition(start_bpm, end_bpm, wav)
 

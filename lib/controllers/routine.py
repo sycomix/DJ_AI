@@ -62,13 +62,7 @@ class Routine():
 
     def find_trans(self, music_list):
 
-        selected_list = []
-
-        for obj in music_list:
-            
-            if obj.start_bpm == self.bpm:
-                selected_list.append(obj)
-        
+        selected_list = [obj for obj in music_list if obj.start_bpm == self.bpm]
         choice = random.choice(selected_list)
 
         return music_list.index(choice)
@@ -79,10 +73,11 @@ class Routine():
 
         for obj in music_list_1:
             if obj.bpm == self.bpm:
-                for obj_2 in music_list_2:
-                    if obj_2.bpm == self.bpm and obj_2.key == obj.key:
-                        selected_list.append((obj,obj_2))
-
+                selected_list.extend(
+                    (obj, obj_2)
+                    for obj_2 in music_list_2
+                    if obj_2.bpm == self.bpm and obj_2.key == obj.key
+                )
         choice = random.choice(selected_list)
 
         self.synth_pair_index = music_list_1.index(choice[0])
@@ -90,19 +85,12 @@ class Routine():
         
     def find_index(self, music_list):
                 
-        selected_list = []
-
-        for obj in music_list:
-            
-            if obj.bpm == 0:
-                selected_list.append(obj)
-            elif obj.bpm == self.bpm:
-                selected_list.append(obj)
-
-        if not selected_list:
-            return -1        
-
-        return music_list.index(random.choice(selected_list))
+        if selected_list := [
+            obj for obj in music_list if obj.bpm in [0, self.bpm]
+        ]:
+            return music_list.index(random.choice(selected_list))
+        else:
+            return -1
 
         
     

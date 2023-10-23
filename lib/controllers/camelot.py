@@ -32,27 +32,17 @@ class Camelot():
 
     def find_samples(self,start_sample, sample_list):
 
-      samples = []
-      for node in self.graph:
-        if start_sample.key == node:
-          for neighbour in self.graph[node]:
-            samples = samples + self.find_sample(start_sample.bpm,neighbour,sample_list)
+        samples = []
+        for node in self.graph:
+          if start_sample.key == node:
+            for neighbour in self.graph[node]:
+              samples = samples + self.find_sample(start_sample.bpm,neighbour,sample_list)
 
-      if not samples:
-        return -1
-
-      return sample_list.index(random.choice(samples))
+        return -1 if not samples else sample_list.index(random.choice(samples))
 
     def find_sample(self,bpm,key,music_list):
 
-      selected_list = []
-
-      for node in music_list:
-
-        if node.key == key and node.bpm == bpm:
-          selected_list.append(node)
-
-      return selected_list
+        return [node for node in music_list if node.key == key and node.bpm == bpm]
 
             
           

@@ -10,29 +10,27 @@ class DJ_AI():
         self.bpm_list = [120, 123, 125, 126, 127, 128, 130]
         self.set_list = []
 
-        self.rout_list = []
-        self.rout_list.append(self.bass_routine)
-        self.rout_list.append(self.bass_routine_2)
-     #   self.rout_list.append(self.synth_routine)
-        self.rout_list.append(self.synth_routine_2)
-        self.rout_list.append(self.synth_snare_routine)
-        self.rout_list.append(self.vocal_routine)
-        self.rout_list.append(self.synth_bass_routine)
-        self.rout_list.append(self.synth_bass_routine_2)
-        self.rout_list.append(self.bass_synth_routine)
-        self.rout_list.append(self.bass_double_routine)
-        self.rout_list.append(self.drum_snare_routine)
-        self.rout_list.append(self.synth_double_routine)
-        self.rout_list.append(self.synth_snare_routine)
-
+        self.rout_list = [
+            self.bass_routine,
+            self.bass_routine_2,
+            self.synth_routine_2,
+            self.synth_snare_routine,
+            self.vocal_routine,
+            self.synth_bass_routine,
+            self.synth_bass_routine_2,
+            self.bass_synth_routine,
+            self.bass_double_routine,
+            self.drum_snare_routine,
+            self.synth_double_routine,
+            self.synth_snare_routine,
+        ]
         self.routines = []
 
     def create_function_list(self):
 
         routine_list = []
 
-        for i in range(random.randrange(3,5)):
-
+        for _ in range(random.randrange(3,5)):
             rout = random.choice(self.rout_list)
             while rout in routine_list:
                 rout = random.choice(self.rout_list)
@@ -88,7 +86,7 @@ class DJ_AI():
 
     def create_set(self, length):
 
-        for i in range(length):
+        for _ in range(length):
             func = random.choice(self.func_list)
             bpm = random.choice(self.bpm_list)
 
@@ -101,7 +99,10 @@ class DJ_AI():
         rout_i = 0
         for routine in self.set_list:
 
-            if routine != self.top_transition_routine and routine != self.full_transition_routine:
+            if routine not in [
+                self.top_transition_routine,
+                self.full_transition_routine,
+            ]:
                 routine(self.routines[rout_i])
             else:
                 routine(self.routines[rout_i],self.routines[rout_i + 1])
@@ -120,7 +121,7 @@ class DJ_AI():
 
     def top_transition_routine(self, routine_1, routine_2):
 
-        if self.controller.curr_drums_full_obj == None:
+        if self.controller.curr_drums_full_obj is None:
             self.controller.start_drums_full(routine_1.drum_full_index,False,0)
             time.sleep(6)
         self.controller.isolate_element(self.controller.curr_drums_full_obj)
@@ -136,7 +137,7 @@ class DJ_AI():
 
     def full_transition_routine(self, routine_1, routine_2):
 
-        if self.controller.curr_drums_tops_obj == None:
+        if self.controller.curr_drums_tops_obj is None:
             self.controller.start_drums_tops(routine_1.drum_tops_index,False,1)
             time.sleep(6)
         self.controller.isolate_element(self.controller.curr_drums_tops_obj)
@@ -151,7 +152,7 @@ class DJ_AI():
         time.sleep(12)
 
     def synth_snare_routine(self, routine):
-        if self.controller.curr_drums_full_obj == None:
+        if self.controller.curr_drums_full_obj is None:
             self.controller.start_drums_full(routine.drum_full_index_2,False,0)
             time.sleep(6)
         self.controller.isolate_element(self.controller.curr_drums_full_obj)
@@ -169,7 +170,7 @@ class DJ_AI():
         time.sleep(22)
 
     def drum_snare_routine(self, routine):
-        if self.controller.curr_drums_tops_obj == None:
+        if self.controller.curr_drums_tops_obj is None:
             self.controller.start_drums_tops(routine.drum_tops_index_2,False,1)
             time.sleep(6)
         self.controller.isolate_element(self.controller.curr_drums_tops_obj)
@@ -195,7 +196,7 @@ class DJ_AI():
 
 
     def synth_double_routine(self, routine):
-        if self.controller.curr_drums_full_obj == None:
+        if self.controller.curr_drums_full_obj is None:
             self.controller.start_drums_full(routine.drum_full_index,False,0)
             time.sleep(6)
         self.controller.isolate_element(self.controller.curr_drums_full_obj)
@@ -214,7 +215,7 @@ class DJ_AI():
         time.sleep(22)
 
     def bass_synth_routine(self, routine):
-        if self.controller.curr_drums_full_obj == None:
+        if self.controller.curr_drums_full_obj is None:
             self.controller.start_drums_full(routine.drum_full_index_2,False,1)
             time.sleep(6)
         self.controller.isolate_element(self.controller.curr_drums_full_obj)
@@ -233,11 +234,11 @@ class DJ_AI():
         time.sleep(12)
         self.controller.start_drums_tops(routine.drum_tops_index,False,4)
         time.sleep(12)
-        self.controller.stop_synth_loop(False,3) 
+        self.controller.stop_synth_loop(False,3)
         time.sleep(22)
 
     def synth_to_bass_routine(self,routine):
-        if self.controller.curr_drums_tops_obj == None:
+        if self.controller.curr_drums_tops_obj is None:
             self.controller.start_drums_tops(routine.drum_tops_index_2,False,1)
             time.sleep(6)
         self.controller.isolate_element(self.controller.curr_drums_tops_obj)
@@ -257,7 +258,7 @@ class DJ_AI():
         time.sleep(22)
 
     def bass_double_routine(self, routine):
-        if self.controller.curr_drums_tops_obj == None:
+        if self.controller.curr_drums_tops_obj is None:
             self.controller.start_drums_tops(routine.drum_tops_index,False,1)
             time.sleep(6)
         self.controller.isolate_element(self.controller.curr_drums_tops_obj)
@@ -277,7 +278,7 @@ class DJ_AI():
 
 
     def synth_routine_2(self, routine):
-        if self.controller.curr_drums_full_obj == None:
+        if self.controller.curr_drums_full_obj is None:
             self.controller.start_drums_full(routine.drum_full_index_2,False,0)
             time.sleep(6)
         self.controller.isolate_element(self.controller.curr_drums_full_obj)
@@ -290,7 +291,7 @@ class DJ_AI():
         time.sleep(32)
 
     def synth_routine(self, routine):
-        if self.controller.curr_drums_tops_obj == None:
+        if self.controller.curr_drums_tops_obj is None:
             self.controller.start_drums_tops(routine.drum_tops_index_2,False,2)
             time.sleep(12)
         self.controller.isolate_element(self.controller.curr_drums_tops_obj)
@@ -305,7 +306,7 @@ class DJ_AI():
         time.sleep(32)
 
     def bass_routine(self, routine):
-        if self.controller.curr_drums_full_obj == None:
+        if self.controller.curr_drums_full_obj is None:
             self.controller.start_drums_full(routine.drum_full_index,False,2)
             time.sleep(12)
         self.controller.isolate_element(self.controller.curr_drums_full_obj)
@@ -322,7 +323,7 @@ class DJ_AI():
         time.sleep(32)
 
     def bass_routine_2(self, routine):
-        if self.controller.curr_drums_full_obj == None:
+        if self.controller.curr_drums_full_obj is None:
             self.controller.start_drums_full(routine.drum_full_index_2,False,2)
             time.sleep(12)
         self.controller.isolate_element(self.controller.curr_drums_full_obj)
@@ -338,7 +339,7 @@ class DJ_AI():
 
 
     def bass_snare_routine(self, routine):
-        if self.controller.curr_drums_full_obj == None:
+        if self.controller.curr_drums_full_obj is None:
             self.controller.start_drums_tops(routine.drum_full_index,False,2)
             time.sleep(12)
         self.controller.isolate_element(self.controller.curr_drums_full_obj)
@@ -354,7 +355,7 @@ class DJ_AI():
         time.sleep(16)
 
     def synth_bass_routine(self, routine):
-        if self.controller.curr_drums_tops_obj == None:
+        if self.controller.curr_drums_tops_obj is None:
             self.controller.start_drums_tops(routine.drum_tops_index,False,2)
             time.sleep(12)
         self.controller.isolate_element(self.controller.curr_drums_tops_obj)
@@ -374,7 +375,7 @@ class DJ_AI():
         time.sleep(16)
 
     def synth_bass_routine_2(self, routine):
-        if self.controller.curr_synth_obj == None:
+        if self.controller.curr_synth_obj is None:
             self.controller.start_synth_loop(routine.synth_pair_index,False,4)
             time.sleep(12)
         self.controller.isolate_element(self.controller.curr_synth_obj)
@@ -391,7 +392,7 @@ class DJ_AI():
     
     def drums_full_top_routine(self, routine):
 
-        if self.controller.curr_drums_full_obj == None:
+        if self.controller.curr_drums_full_obj is None:
             self.controller.start_drums_full(routine.drum_full_index,False,0)
             time.sleep(6)
         self.controller.isolate_element(self.controller.curr_drums_full_obj)
@@ -404,7 +405,7 @@ class DJ_AI():
         time.sleep(22)
 
     def vocal_routine(self, routine):
-        if self.controller.curr_drums_tops_obj == None:
+        if self.controller.curr_drums_tops_obj is None:
             self.controller.start_drums_tops(routine.drum_tops_index,False,2)
             time.sleep(12)
         self.controller.isolate_element(self.controller.curr_drums_tops_obj)
@@ -423,10 +424,10 @@ class DJ_AI():
     
 
     def routine_A(self, routine):
- 
-        print("Playing: Routine_A, BPM: " + str(routine.bpm))
+     
+        print(f"Playing: Routine_A, BPM: {str(routine.bpm)}")
 
-        self.controller.start_bass_hit(routine.bass_hit_index,False) 
+        self.controller.start_bass_hit(routine.bass_hit_index,False)
         self.controller.start_drums_tops(routine.drum_tops_index,False,0)
         time.sleep(16)
         self.controller.start_synth_loop(routine.synth_index,False,6)
@@ -438,15 +439,15 @@ class DJ_AI():
         self.controller.stop_drums_full(False,2)
         time.sleep(22)
         self.controller.stop_synth_loop(False,0)
-        self.controller.start_bass_hit(routine.bass_hit_index,False) 
+        self.controller.start_bass_hit(routine.bass_hit_index,False)
         self.controller.start_drums_full(routine.drum_full_index,False,0)
-        self.controller.start_drums_tops(routine.drum_tops_index,True,0) 
-        time.sleep(16)  
-        self.controller.start_bass_loop(routine.bass_loop_index,False,4) 
+        self.controller.start_drums_tops(routine.drum_tops_index,True,0)
+        time.sleep(16)
+        self.controller.start_bass_loop(routine.bass_loop_index,False,4)
         time.sleep(12)
         self.controller.stop_drums_tops(False,0)
         time.sleep(12)
-        self.controller.start_drums_tops(routine.drum_tops_index,False,2) 
+        self.controller.start_drums_tops(routine.drum_tops_index,False,2)
         time.sleep(4)
         self.controller.start_drums_full(routine.drum_full_index_2,False,0)
         time.sleep(6)
@@ -463,7 +464,7 @@ class DJ_AI():
         
     def routine_B(self, routine):
 
-        print("Playing: Routine_B, BPM: " + str(routine.bpm))
+        print(f"Playing: Routine_B, BPM: {str(routine.bpm)}")
 
         self.controller.start_bass_hit(routine.bass_hit_index,False)
         self.controller.start_drums_full(routine.drum_full_index,False,0)
@@ -482,7 +483,7 @@ class DJ_AI():
         self.controller.start_drums_full(routine.drum_full_index,True,0)
         time.sleep(12)
         self.controller.stop_drums_full(False,2)
-        time.sleep(12)   
+        time.sleep(12)
         self.controller.start_drums_full(routine.drum_full_index_2,False,0)
         time.sleep(10)
         self.controller.stop_bass_loop(False,6)
@@ -492,7 +493,7 @@ class DJ_AI():
         self.controller.start_drums_tops(routine.drum_tops_index,False,0)
         self.controller.stop_drums_full(True,0)
         time.sleep(22)
-        self.controller.start_drums_full(routine.drum_full_index_2,False,0)  
+        self.controller.start_drums_full(routine.drum_full_index_2,False,0)
         time.sleep(8)
         self.controller.stop_synth_loop(False,3)
         time.sleep(18)
@@ -507,7 +508,7 @@ class DJ_AI():
 
     def routine_C(self, routine):
 
-        print("Playing: Routine_C, BPM: " + str(routine.bpm))
+        print(f"Playing: Routine_C, BPM: {str(routine.bpm)}")
 
         self.controller.start_bass_hit(routine.bass_hit_index,False)
         self.controller.start_drums_full(routine.drum_full_index,False,0)
@@ -537,14 +538,14 @@ class DJ_AI():
         self.controller.start_drums_full(routine.drum_full_index,False,0)
         self.controller.stop_drums_tops(True,0)
         time.sleep(22)
-        self.controller.stop_drums_full(False,6) 
+        self.controller.stop_drums_full(False,6)
         time.sleep(16)
         self.controller.stop_bass_loop(False,4)
         time.sleep(22)
        
     def routine_D(self, routine):
 
-        print("Playing: Routine_D, BPM: " + str(routine.bpm))
+        print(f"Playing: Routine_D, BPM: {str(routine.bpm)}")
 
         self.controller.start_bass_hit(routine.bass_hit_index,False)
         self.controller.start_drums_full(routine.drum_full_index,False,0)
@@ -600,7 +601,7 @@ class DJ_AI():
 
     def routine_E(self, routine):
 
-        print("Playing: Routine_E, BPM: " + str(routine.bpm))
+        print(f"Playing: Routine_E, BPM: {str(routine.bpm)}")
 
         self.controller.start_bass_hit(routine.bass_hit_index,False)
         self.controller.start_drums_full(routine.drum_full_index,False,0)
@@ -639,7 +640,7 @@ class DJ_AI():
 
     def routine_F(self, routine):
 
-        print("Playing: Routine_F, BPM: " + str(routine.bpm))
+        print(f"Playing: Routine_F, BPM: {str(routine.bpm)}")
 
         self.controller.start_bass_hit(routine.bass_hit_index,False)
         self.controller.start_drums_full(routine.drum_full_index,False,0)
